@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello_world/HomePage.dart';
 
 main(List<String> args) {
   runApp(MyApp());
@@ -9,14 +10,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int days = 31;
-
-    return MaterialApp(
-        home: Material(
-      child: Center(
-          child: Container(
-        child: Text("Welcome to $days days flutter"),
-      )),
-    ));
+    return MaterialApp(home: HomePage());
   }
 }

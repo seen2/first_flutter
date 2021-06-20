@@ -4,7 +4,7 @@ main(List<String> args) {
   var halogens = {
     'flourine',
     'chlorine',
-    'flourine'
+    // 'flourine'
   }; //flourine is stored one time because set is unique collection of items
 
   print(halogens);

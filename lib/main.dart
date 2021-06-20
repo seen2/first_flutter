@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hello_world/screens/HomeScreen.dart';
 import 'package:hello_world/screens/LoginScreen.dart';
 import 'package:hello_world/utils/myRoutes.dart';
-import 'package:hello_world/_dart/themes.dart';
+import 'package:hello_world/utils/themes.dart';
 
 main(List<String> args) {
   runApp(MyApp());

@@ -4,7 +4,8 @@ import 'dart:convert';
 import 'package:hello_world/models/item.dart';
 
 import 'package:hello_world/screens/DrawerScreen.dart';
-import 'package:hello_world/widgets/ItemWidget.dart';
+import 'package:hello_world/utils/themes.dart';
+import 'package:hello_world/widgets/CatalogItem.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -37,39 +38,54 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Catalog App"),
+        title: Text(
+          "Catalog App",
+          style: TextStyle(color: Themes.darkBluishColor),
+        ),
       ),
-      body: (CatalogMoodel.items?.isEmpty ?? true)
-          ? Center(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CatalogHeader(),
+          if (CatalogMoodel.items?.isNotEmpty ?? false)
+            Expanded(child: CatalogList())
+          else
+            Center(
               child: CircularProgressIndicator(),
-            )
-          : GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, crossAxisSpacing: 16, mainAxisSpacing: 16),
-              itemCount: CatalogMoodel.items?.length ?? 0,
-              itemBuilder: (context, index) {
-                return Card(
-                  clipBehavior: Clip.antiAlias,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  child: GridTile(
-                    header: Container(
-                      child: Text(
-                        CatalogMoodel.items?[index].name ?? '',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      padding: EdgeInsets.all(12),
-                      decoration: BoxDecoration(color: Colors.deepPurple),
-                    ),
-                    child:
-                        Image.network(CatalogMoodel.items?[index].image ?? ''),
-                    footer: Text(
-                        "\$${CatalogMoodel.items?[index].price.toString() ?? ''}"),
-                  ),
-                );
-              },
             ),
+        ],
+      ),
       drawer: DrawerScreen(),
+    );
+  }
+}
+
+class CatalogHeader extends StatelessWidget {
+  const CatalogHeader({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "Trending Products",
+      style: TextStyle(color: Themes.darkBluishColor, fontSize: 22),
+    );
+  }
+}
+
+class CatalogList extends StatelessWidget {
+  const CatalogList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: CatalogMoodel.items?.length,
+      itemBuilder: (context, index) {
+        final catalog = CatalogMoodel.items?[index];
+        return CatalogItem(
+          catalog: catalog,
+        );
+      },
     );
   }
 }

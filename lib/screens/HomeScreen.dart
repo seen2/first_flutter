@@ -5,7 +5,8 @@ import 'package:hello_world/models/item.dart';
 
 import 'package:hello_world/screens/DrawerScreen.dart';
 import 'package:hello_world/utils/themes.dart';
-import 'package:hello_world/widgets/CatalogItem.dart';
+import 'package:hello_world/widgets/CatalogHeader.dart';
+import 'package:hello_world/widgets/CatalogList.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -22,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   loadData() async {
+    await Future.delayed(Duration(milliseconds: 2000));
     final catalogJSON =
         await rootBundle.loadString("assets/files/catalog.json");
     final decodedData = jsonDecode(catalogJSON);
@@ -50,42 +52,10 @@ class _HomeScreenState extends State<HomeScreen> {
           if (CatalogMoodel.items?.isNotEmpty ?? false)
             Expanded(child: CatalogList())
           else
-            Center(
-              child: CircularProgressIndicator(),
-            ),
+            Expanded(child: Center(child: CircularProgressIndicator())),
         ],
       ),
       drawer: DrawerScreen(),
-    );
-  }
-}
-
-class CatalogHeader extends StatelessWidget {
-  const CatalogHeader({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      "Trending Products",
-      style: TextStyle(color: Themes.darkBluishColor, fontSize: 22),
-    );
-  }
-}
-
-class CatalogList extends StatelessWidget {
-  const CatalogList({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: CatalogMoodel.items?.length,
-      itemBuilder: (context, index) {
-        final catalog = CatalogMoodel.items?[index];
-        return CatalogItem(
-          catalog: catalog,
-        );
-      },
     );
   }
 }

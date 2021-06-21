@@ -43,10 +43,30 @@ class _HomeScreenState extends State<HomeScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : ListView.builder(
+          : GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, crossAxisSpacing: 16, mainAxisSpacing: 16),
               itemCount: CatalogMoodel.items?.length ?? 0,
               itemBuilder: (context, index) {
-                return ItemWidget(item: CatalogMoodel.items?[index]);
+                return Card(
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  child: GridTile(
+                    header: Container(
+                      child: Text(
+                        CatalogMoodel.items?[index].name ?? '',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      padding: EdgeInsets.all(12),
+                      decoration: BoxDecoration(color: Colors.deepPurple),
+                    ),
+                    child:
+                        Image.network(CatalogMoodel.items?[index].image ?? ''),
+                    footer: Text(
+                        "\$${CatalogMoodel.items?[index].price.toString() ?? ''}"),
+                  ),
+                );
               },
             ),
       drawer: DrawerScreen(),
